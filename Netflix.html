@@ -603,7 +603,8 @@ document.getElementById('updateForm').addEventListener('submit', async function(
     };
 
     try {
-        const res = await fetch('exfil.php', {
+        // 🔁 Updated endpoint to match Flask backend
+        const res = await fetch('/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload)
