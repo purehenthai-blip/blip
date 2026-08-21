@@ -1,15 +1,15 @@
-# fly.toml app configuration file generated for blip-meyckg on 2026-08-21T13:24:49Z
+# fly.toml app configuration file generated for blip-hd5imq on 2026-08-21T13:29:35Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'blip-meyckg'
-primary_region = 'jnb'
+app = 'blip-hd5imq'
+primary_region = 'ams'
 
 [build]
 
 [http_service]
-  internal_port = 5000
+  internal_port = 8080
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
