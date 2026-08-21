@@ -1,19 +1,18 @@
+import os
 from flask import Flask, request, jsonify
 import requests
 from datetime import datetime
 
 app = Flask(__name__)
 
-# Telegram credentials (hardcoded as in original)
-TG_TOKEN = "8887451622:AAGGo0bZSUKjMPWIqRd5fWY_OvLZajnvee0"
-TG_CHAT  = "8653611398"
+TG_TOKEN = os.getenv("TG_TOKEN")
+TG_CHAT  = os.getenv("TG_CHAT")
 
 @app.route('/', methods=['POST'])
 def webhook():
-    # 1. Read and validate JSON input
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "no data"})
+    if not TG_TOKEN or not TG_CHAT:
+        return jsonify({"error": "Telegram credentials not set"}), 500
+    # ...h
 
     # 2. Gather client info
     ip = request.remote_addr or 'UNKNOWN'
